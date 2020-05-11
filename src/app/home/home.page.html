@@ -1,12 +1,48 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
+  <ion-toolbar color="primary">
+    <ion-title >
+      bbv ZH - Rooms
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+  <ion-card *ngFor="let room of rooms">
+    <ion-card-header>
+      <ion-card-subtitle>bbv Zürich</ion-card-subtitle>
+      <ion-card-title>{{ room.name }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-item lines="none" mode="ios">
+      <ion-icon name="people" slot="start"></ion-icon>
+      <ion-label>{{ room.occupancy }}</ion-label>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Admin</ion-card-subtitle>
+        <ion-card-title>Settings</ion-card-title>
+      </ion-card-header>
+  
+      <ng-container *ngFor="let room of rooms">
+        <ion-item lines="none">
+          <ion-label>bbv Zürich - {{ room.name }}</ion-label>
+          <ion-chip *ngIf="savingRoomId === room.id" color="secondary" slot="end">
+            <ion-icon name="checkmark" color="secondary"></ion-icon>
+            <ion-label>saved</ion-label>
+          </ion-chip>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Occupancy</ion-label>
+          <ion-input 
+            type="number"
+            (ionBlur)="update(room.id, room)"
+            [(ngModel)]="room.occupancy">
+          </ion-input>
+        </ion-item>
+      </ng-container>
+    </ion-card>
+
 </ion-content>
